@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+  <!-- Name of the world -->
+  <arg name="world"                                 default="singlePillar"/>
+  <!-- Path to the world file -->
+  <arg name="world_file"                            default="$(find smb_highlevel_controller)/worlds/$(arg world).world"/>
+  <arg name="laser_enabled"							default="true"/>
+
+  <include file = "$(find smb_gazebo)/launch/smb_gazebo.launch">
+    <arg name="world" value="$(arg world)"/>
+    <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+  </include>
+
+  <node name="smb_highlevel_controller" pkg="smb_highlevel_controller"
+    type="smb_highlevel_controller" output="screen">
+    <rosparam command="load"
+        file="$(find smb_highlevel_controller)/config/parameters.yaml" />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d /home/liang/catkin_ws/src/smb_config.rviz" />
+
+ 
+</launch>
