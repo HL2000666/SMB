@@ -22,9 +22,17 @@ public:
 	 */
 	SmbHighlevelController(ros::NodeHandle& nodeHandle);
 
-	void SetVelocity(const float &vel_x, const float &vel_y);
+	void SetLinearVelocity(const float &vel);
 
-	void PController();
+	void SetAngularVelocity(const float &ang);
+
+	void PControllerSpeed(const float &dist);
+
+	void PControllerHeading(const float &ang);
+
+	void DriveRobot();
+
+	bool PositionInvalid();
 
 	void VisualizeMarker();
 
@@ -49,7 +57,8 @@ private:
 	ros::Publisher marker_pub_;
 	geometry_msgs::Twist msg_;
 	visualization_msgs::Marker marker_;
-	float p_gain_;
+	float p_gain_vel_;
+	float p_gain_ang_;
 	double min_range_;
 	double max_range_;
 	double laser_scan_min_height_;
