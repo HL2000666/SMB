@@ -1,4 +1,4 @@
 subscriber_topic: /scan
 queue_size: 10
-P_gain_vel: 1
-P_gain_ang: 1
+P_gain_vel: 1.0
+P_gain_ang: 1.0

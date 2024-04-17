@@ -13,11 +13,11 @@
     <arg name="laser_enabled" value="$(arg laser_enabled)"/>
   </include>
 
-  <node name="smb_highlevel_controller" pkg="smb_highlevel_controller"
+  <!-- <node name="smb_highlevel_controller" pkg="smb_highlevel_controller"
     type="smb_highlevel_controller" output="screen">
     <rosparam command="load"
         file="$(find smb_highlevel_controller)/config/parameters.yaml" />
-  </node>
+  </node> -->
 
   <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d /home/liang/catkin_ws/src/smb_config.rviz" />
 

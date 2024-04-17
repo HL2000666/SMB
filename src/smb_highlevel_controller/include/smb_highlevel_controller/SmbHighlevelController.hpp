@@ -22,20 +22,28 @@ public:
 	 */
 	SmbHighlevelController(ros::NodeHandle& nodeHandle);
 
+    //set the linear_x velocity
 	void SetLinearVelocity(const float &vel);
 
+	//set the angular_z velocity
 	void SetAngularVelocity(const float &ang);
 
+	//p controller for the linear_x velocity
 	void PControllerSpeed(const float &dist);
 
+	//p controller for the angular_z velocity
 	void PControllerHeading(const float &ang);
 
+	//publish the velocity
 	void DriveRobot();
 
+	//check whether the pillar's position is valid
 	bool PositionInvalid();
 
+	//visualize the pillar
 	void VisualizeMarker();
 
+	//initialize the marker
 	void InitMarker();
 
 
@@ -59,10 +67,6 @@ private:
 	visualization_msgs::Marker marker_;
 	float p_gain_vel_;
 	float p_gain_ang_;
-	double min_range_;
-	double max_range_;
-	double laser_scan_min_height_;
-	double laser_scan_max_height_;
 	float pillar_position_[2];
 
 };

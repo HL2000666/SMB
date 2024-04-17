@@ -20,9 +20,8 @@ SmbHighlevelController::SmbHighlevelController(ros::NodeHandle& nodeHandle) :
       ROS_ERROR("Could not find subscriber parameters!");
   }
 
-  //TODO: EX2.4,5
   scan_subscriber_ = nodeHandle_.subscribe(topic, queue_size, &SmbHighlevelController::ScanCallback, this);
-  //TODO: EX3.4
+
   cmd_vel_pub_ = nodeHandle_.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
   marker_pub_ = nodeHandle_.advertise<visualization_msgs::Marker>("visualization_marker", 0);
   InitMarker();
@@ -61,6 +60,8 @@ void SmbHighlevelController::PControllerHeading(const float &ang) {
 }
 
 void SmbHighlevelController::DriveRobot() {
+  ROS_INFO_STREAM("linear velocity: " << msg_.linear.x);
+  ROS_INFO_STREAM("angular velocity: " << msg_.angular.z);
   cmd_vel_pub_.publish(msg_);
 }
 
@@ -69,7 +70,6 @@ bool SmbHighlevelController::PositionInvalid() {
           pillar_position_[1] == std::numeric_limits<float>::infinity() * -1);
 }
 
-//TODO: EX3.8
 void SmbHighlevelController::VisualizeMarker() {
   marker_.pose.position.x = pillar_position_[0];
   marker_.pose.position.y = pillar_position_[1];
@@ -78,9 +78,9 @@ void SmbHighlevelController::VisualizeMarker() {
 }
 
 void SmbHighlevelController::InitMarker(){
-  marker_.header.frame_id = "base_laser";
+  marker_.header.frame_id = "rslidar_base_link";
   marker_.header.stamp = ros::Time();
-  marker_.ns = "pillar_marker";
+  marker_.ns = "pillar";
   marker_.id = 1;
   marker_.type = visualization_msgs::Marker::CYLINDER;
   marker_.action = visualization_msgs::Marker::ADD;
@@ -89,9 +89,9 @@ void SmbHighlevelController::InitMarker(){
   marker_.pose.position.z = -1.0;
   marker_.scale.x = 1.0;
   marker_.scale.y = 1.0;
-  marker_.scale.z = 1.0;
+  marker_.scale.z = 2.0;
   marker_.color.a = 1.0;
-  marker_.color.r = 255.0;
+  marker_.color.r = 1.0;
   marker_.color.g = 0.0;
   marker_.color.b = 0.0;
 }
@@ -106,7 +106,7 @@ void SmbHighlevelController::ScanCallback(const sensor_msgs::LaserScanConstPtr& 
   pillar_position_[0] = *minimum_distance_ptr * std::cos(angular);
   pillar_position_[1] = *minimum_distance_ptr * std::sin(angular);
 
-  ROS_INFO_STREAM("Pillar is " << *minimum_distance_ptr << "away at" << angular << " degrees");
+  ROS_INFO_STREAM("Pillar is " << *minimum_distance_ptr << "away at" << angular * 180.0 / M_PI << " degrees");
   ROS_INFO_STREAM("Pillar's position wrt robot is: " << pillar_position_[0] << ","
                                                      << pillar_position_[1]);
   
