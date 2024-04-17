@@ -40,6 +40,12 @@ visualization_msgs/Marker.h
 ros/ros.h
 -
 
+/home/liang/catkin_ws/src/smb_highlevel_controller/src/smb_highlevel_controller_node.cpp
+ros/ros.h
+-
+smb_highlevel_controller/SmbHighlevelController.hpp
+/home/liang/catkin_ws/src/smb_highlevel_controller/src/smb_highlevel_controller/SmbHighlevelController.hpp
+
 /opt/ros/noetic/include/geometry_msgs/Point.h
 string
 -
